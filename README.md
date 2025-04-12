@@ -110,18 +110,35 @@ This repository demonstrates a novel approach to training generative models by c
    - Runs the training loop over a specified number of epochs.
    - Integrates periodic saving of generated images and model weights.
 
-2. **`calculate_rewards()`**  
-   - Computes a reward based on the current FID, loss values, and a diversity score.
-   - Incorporates a dynamic weight mechanism dependent on training progress.
+2. **`calculate_rewards()`**
 
+This function computes the reward for the RL agent using a composite metric that balances improvements between epochs with the current performance level. It follows this formula:
+
+```math
+R_{\text{total}}(t) = \lambda(t) \cdot R_{\text{improve}}(t) + \bigl(1 - \lambda(t)\bigr) \cdot R_{\text{level}}(t)
+```
+
+Where:
+- **$\(R_{\text{improve}}(t)\)$** evaluates the improvement from the previous state, combining:
+  - **FID Improvement (50%)**: Difference in FID scores between epochs.
+  - **Loss Balance (30%)**: Difference between generator and discriminator losses.
+  - **Diversity (20%)**: Variance-based score to encourage image variety.
+
+- **$\(R_{\text{level}}(t)\)$** assesses the current state by considering:
+  - **FID Score (40%)**: Current FID value.
+  - **Generator Loss (30%)**: Current generator loss.
+  - **Diversity (30%)**: As above, to ensure image diversity.
+
+- **$\(\lambda(t)\)$** is a dynamic weight that shifts during training:
+  - **Early Stage (0–30%):** $\(\lambda(t) \approx 0.8\)$
+  - **Middle Stage (30–70%):** $\(\lambda(t) \approx 0.5\)$
+  - **Late Stage (70–100%):** $\(\lambda(t) \approx 0.3\)$
+
+In short, `calculate_rewards()` blends these two reward components to provide a comprehensive signal that guides the RL agent in adjusting hyperparameters throughout the training process.
+
+    
 3. **`calculate_diversity_score()`**  
    - Measures the diversity of generated images using the variance across a batch.
-
-4. **`create_training_video()`**  
-   - Compiles saved image samples into a video to visualize training progression.
-
-5. **`plot_training_progress()`**  
-   - Reads log files and plots metrics such as losses, FID, and rewards.
 
 ---
 
@@ -164,7 +181,6 @@ pip install torch torchvision numpy matplotlib moviepy pillow
 ---
 
 ## Training Parameters
-
 -Batch Size: 32
 
 -Image Dimensions: 64x64 RGB
@@ -194,7 +210,7 @@ pip install torch torchvision numpy matplotlib moviepy pillow
 ### Logging and Visualization
 - Training progress is rigorously logged and visualized.
 - Generated images, metrics plots, and a summary video provide insights into model performance over time.
-- 
+  
 #### Visualizing training process
 The visualization shows the average values per epoch, with an important detail after removing outliers using the IQR method.
 <img src="https://github.com/user-attachments/assets/e5c828fd-1a40-46e7-93a9-f37f2e837a4f" alt="training_progress" width="700"/>
