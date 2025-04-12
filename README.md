@@ -213,6 +213,8 @@ pip install torch torchvision numpy matplotlib moviepy pillow
   
 #### Visualizing training process
 The visualization shows the average values per epoch, with an important detail after removing outliers using the IQR method.
+
+
 <img src="https://github.com/user-attachments/assets/e5c828fd-1a40-46e7-93a9-f37f2e837a4f" alt="training_progress" width="700"/>
 
 https://github.com/user-attachments/assets/66f45782-2eff-4731-b93b-74e52e14afaf
