@@ -1,7 +1,8 @@
 # DCGAN with RL-Guided Hyperparameter Optimization
 
-This project implements a Deep Convolutional Generative Adversarial Network (DCGAN) enhanced with a Reinforcement Learning (RL) agent to dynamically adjust critical hyperparameters during training. The integrated RL component employs a Proximal Policy Optimization (PPO) approach for fine-tuning the learning rate and momentum (beta1) in response to evolving training metrics.
-Due to the limited resources, only fewer epochs are tested. You can see the process how this model trained by visualized video.
+This project implements a Deep Convolutional Generative Adversarial Network (DCGAN) enhanced with a Reinforcement Learning (RL) agent that dynamically adjusts key hyperparameters during training. The RL component uses the Proximal Policy Optimization (PPO) algorithm to fine-tune the learning rate and momentum parameter (beta1) based on evolving training metrics.
+
+Due to limited computational resources, the model was trained for only 10 epochs—fewer than typically used in similar projects. With better resource availability, there is significant potential for further improvements through extended training and more advanced tuning.
 
 ---
 
@@ -16,9 +17,8 @@ Due to the limited resources, only fewer epochs are tested. You can see the proc
 - [Main Functions](#main-functions)
 - [Usage Instructions](#usage-instructions)
 - [Training Parameters](#training-parameters)
-- [Output Files](#output-files)
 - [Dependencies](#dependencies)
-- [Additional Notes](#additional-notes)
+- [Additional Notes and Results](#additional-notes-and-results)
 
 ---
 
@@ -136,13 +136,13 @@ This repository demonstrates a novel approach to training generative models by c
    python dcgan_basic.py
 3. **Training Process Flow:**
 
--The script initializes the DCGAN models and the RL agent.
-
--The network trains for 50 epochs, periodically saving generated image samples.
-
--Progress is logged to a file and visualized through plots and a training video.
-
--Final model weights for both the generator and discriminator are saved upon completion.
+    -The script initializes the DCGAN models and the RL agent.
+    
+    -The network trains for 50 epochs, periodically saving generated image samples.
+    
+    -Progress is logged to a file and visualized through plots and a training video.
+    
+    -Final model weights for both the generator and discriminator are saved upon completion.
 
 ---
 ## Dependencies
@@ -180,19 +180,8 @@ pip install torch torchvision numpy matplotlib moviepy pillow
 -RL Update Frequency: Every 50 batches
 
 ---
-## Output Files
 
-After training, the following files will be generated:
-
-- **generator.pth**: Saved weights for the trained generator model.
-- **discriminator.pth**: Saved weights for the trained discriminator model.
-- **training_progress.mp4**: A video summarizing the training process.
-- **training_progress.png**: Plots of training metrics (loss, FID, rewards).
-- **Generated Image Samples**: Saved periodically during training for visual inspection.
-
----
-
-## Additional Notes
+## Additional Notes and Results
 
 ### FID Calculation
 - The FID (Fréchet Inception Distance) calculation is simplified in this implementation.
@@ -205,6 +194,19 @@ After training, the following files will be generated:
 ### Logging and Visualization
 - Training progress is rigorously logged and visualized.
 - Generated images, metrics plots, and a summary video provide insights into model performance over time.
+- 
+#### Visualizing training process
+The visualization shows the average values per epoch, with an important detail after removing outliers using the IQR method.
+<img src="https://github.com/user-attachments/assets/e5c828fd-1a40-46e7-93a9-f37f2e837a4f" alt="training_progress" width="700"/>
+
+https://github.com/user-attachments/assets/66f45782-2eff-4731-b93b-74e52e14afaf
+
+#### Improved images in final epoch (=10th epoch) in training process
+![final_image](https://github.com/user-attachments/assets/52a0c6dc-b70e-4e9d-952c-76deaf1704d2)
+#### Newly generated images
+![generatedimage](https://github.com/user-attachments/assets/e036948c-e887-40c2-a7f6-b8a54443c8f8)
+
+
 
 ### GPU Support
 - The script automatically detects and uses GPU acceleration if available.
