@@ -2,6 +2,7 @@
 
 This project implements a Deep Convolutional Generative Adversarial Network (DCGAN) enhanced with a Reinforcement Learning (RL) agent to dynamically adjust critical hyperparameters during training. The integrated RL component employs a Proximal Policy Optimization (PPO) approach for fine-tuning the learning rate and momentum (beta1) in response to evolving training metrics.
 Due to the limited resources, only fewer epochs are tested. You can see the process how this model trained by visualized video.
+
 ---
 
 ## Table of Contents
